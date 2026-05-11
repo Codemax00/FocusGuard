@@ -6,6 +6,24 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="accessibility_description">FocusGuard monitors neural patterns to protect your cognitive energy.</string>
+
+    <!-- Emotional AI Microcopy -->
+    <string name="state_calm">Neural state: Stabilized</string>
+    <string name="state_busy">Attention fragmentation detected</string>
+    <string name="state_fragmented">Cognitive overload imminent</string>
+    <string name="state_recovery">Healing neural pathways</string>
+
+    <string name="msg_scrolling_warning">Your attention is fragmenting. Consider a brief recovery.</string>
+    <string name="msg_time_wasted">You have spent %1$d minutes in passive consumption. Your goals are waiting.</string>
+    <string name="msg_block_title">Cognitive Shield Active</string>
+    <string name="msg_block_default">Your mind is currently in a high-focus protocol. This environment may disrupt your stabilization.</string>
+    <string name="msg_recovery_needed">Neural reset recommended. Shall we breathe?</string>
+
+    <string name="shop_title">Neural Enhancements</string>
+    <string name="shop_subtitle">Upgrade your cognitive focus with neural protocols.</string>
+    <string name="shop_loading">Syncing with neural network&#8230;</string>
+
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris

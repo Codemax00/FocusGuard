@@ -10,19 +10,42 @@
         android:name="com.example.focusguard.FirstFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_first">
-
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_FirstFragment_to_StudyFragment"
+            app:destination="@id/StudyFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.focusguard.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/StudyFragment"
+        android:name="com.example.focusguard.StudyFragment"
+        android:label="Study Protocol"
+        tools:layout="@layout/fragment_study">
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_StudyFragment_to_RecoveryFragment"
+            app:destination="@id/RecoveryFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/RecoveryFragment"
+        android:name="com.example.focusguard.RecoveryFragment"
+        android:label="Cognitive Recovery"
+        tools:layout="@layout/fragment_recovery" />
+
+    <fragment
+        android:id="@+id/AnalyticsFragment"
+        android:name="com.example.focusguard.AnalyticsFragment"
+        android:label="Analytics"
+        tools:layout="@layout/fragment_analytics" />
+
+    <fragment
+        android:id="@+id/ProfileFragment"
+        android:name="com.example.focusguard.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/NeuralShopFragment"
+        android:name="com.example.focusguard.NeuralShopFragment"
+        android:label="Neural Shop"
+        tools:layout="@layout/fragment_neural_shop" />
 </navigation>

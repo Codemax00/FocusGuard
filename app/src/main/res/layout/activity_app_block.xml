@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_dark"
+    android:padding="32dp">
+
+    <View
+        android:id="@+id/block_glow"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@drawable/brain_glow_red"
+        android:alpha="0.4"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_lock"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@android:drawable/ic_lock_lock"
+        app:tint="@color/magenta_alert"
+        app:layout_constraintBottom_toTopOf="@+id/tv_block_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:id="@+id/tv_block_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Focus Protocol Active"
+        android:textColor="@color/white"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_block_message"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:text="Your brain is in deep work mode. This app is restricted to protect your dopamine levels."
+        android:textColor="@color/text_secondary"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_block_title" />
+
+    <TextView
+        android:id="@+id/tv_challenge_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Neural Override Protocol"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:alpha="0.7"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_block_message" />
+
+    <TextView
+        android:id="@+id/tv_challenge_question"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="Why is this distraction worth your neural energy right now?"
+        android:textColor="@color/cyan_glow"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_challenge_label" />
+
+    <EditText
+        android:id="@+id/et_override_reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/card_stats_bg"
+        android:hint="State your intention..."
+        android:padding="12dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/text_secondary"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_challenge_question" />
+
+    <Button
+        android:id="@+id/btn_override"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/card_dark"
+        android:text="Attempt Neural Override"
+        android:textAllCaps="false"
+        android:textColor="@color/text_secondary"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_override_reason" />
+
+    <Button
+        android:id="@+id/btn_back_to_focus"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#0066FF"
+        android:text="Back to Focus"
+        android:textAllCaps="false"
+        app:cornerRadius="28dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
