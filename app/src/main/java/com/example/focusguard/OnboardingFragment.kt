@@ -20,9 +20,13 @@ class OnboardingFragment : Fragment() {
     private var selectedPhotoUri: Uri? = null
 
     private val pickImageLauncher = registerForActivityResult(
-        ActivityResultContracts.GetContent()
+        ActivityResultContracts.OpenDocument()
     ) { uri: Uri? ->
         uri?.let {
+            // Take persistable permission
+            requireContext().contentResolver.takePersistableUriPermission(
+                it, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
             selectedPhotoUri = it
             binding.ivAnchorPhoto.setImageURI(it)
             binding.tvUploadHint.visibility = View.GONE
@@ -40,16 +44,14 @@ class OnboardingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Check if an anchor is already set. If yes, skip onboarding
-        val currentQuote = viewModel.emotionalAnchorQuote.value
-        val currentPhoto = viewModel.emotionalAnchorPhotoUri.value
-        if (currentQuote != "I build for my family's better tomorrow." || currentPhoto != null) {
+        // Check if onboarding is complete
+        if (viewModel.isOnboardingComplete.value == true) {
             findNavController().navigate(R.id.action_OnboardingFragment_to_FirstFragment)
             return
         }
 
         binding.btnUploadPhoto.setOnClickListener {
-            pickImageLauncher.launch("image/*")
+            pickImageLauncher.launch(arrayOf("image/*"))
         }
 
         binding.btnContinue.setOnClickListener {

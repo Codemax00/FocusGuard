@@ -42,14 +42,19 @@ class FocusViewModel(application: Application) : AndroidViewModel(application) {
     private val _emotionalAnchorPhotoUri = MutableLiveData<String>(prefs.getString("anchor_photo", null))
     val emotionalAnchorPhotoUri: LiveData<String?> = _emotionalAnchorPhotoUri
 
+    private val _isOnboardingComplete = MutableLiveData<Boolean>(prefs.getBoolean("onboarding_complete", false))
+    val isOnboardingComplete: LiveData<Boolean> = _isOnboardingComplete
+
     fun saveEmotionalAnchor(quote: String, photoUri: String?) {
         prefs.edit().apply {
             putString("anchor_quote", quote)
             putString("anchor_photo", photoUri)
+            putBoolean("onboarding_complete", true)
             apply()
         }
         _emotionalAnchorQuote.value = quote
         _emotionalAnchorPhotoUri.value = photoUri
+        _isOnboardingComplete.value = true
     }
 
     // Study Session State
