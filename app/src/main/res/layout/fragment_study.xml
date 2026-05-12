@@ -12,23 +12,15 @@
         android:id="@+id/tv_study_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Study Protocol"
+        android:text="Deep Focus"
         android:textColor="@color/white"
-        android:textSize="22sp"
+        android:textSize="28sp"
         android:textStyle="bold"
+        android:gravity="center"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_mode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="● Deep Focus Mode"
-        android:textColor="@color/cyan_glow"
-        android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_study_title" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp" />
 
     <!-- 1. Topic Input Layout (Initial State) -->
     <LinearLayout
@@ -38,7 +30,7 @@
         android:orientation="vertical"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_mode">
+        app:layout_constraintTop_toBottomOf="@id/tv_study_title">
 
         <TextView
             android:layout_width="wrap_content"
@@ -118,21 +110,31 @@
     <!-- 2. Timer Layout (Active State) -->
     <FrameLayout
         android:id="@+id/layout_timer"
-        android:layout_width="280dp"
-        android:layout_height="280dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/layout_timer_controls"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_mode">
+        app:layout_constraintTop_toBottomOf="@id/tv_study_title">
 
+        <!-- Outer Soft Glow -->
         <View
-            android:id="@+id/timer_glow"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
+            android:id="@+id/timer_glow_outer"
+            android:layout_width="260dp"
+            android:layout_height="260dp"
             android:layout_gravity="center"
-            android:background="@drawable/brain_glow_cyan"
-            android:alpha="0.3" />
+            android:alpha="0.2"
+            android:background="@drawable/brain_glow_cyan" />
+
+        <!-- Main Timer Circle Background -->
+        <View
+            android:id="@+id/timer_circle"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:background="@drawable/brain_shape"
+            android:backgroundTint="@color/card_dark" />
 
         <TextView
             android:id="@+id/tv_timer"
@@ -141,16 +143,25 @@
             android:layout_gravity="center"
             android:text="25:00"
             android:textColor="@color/white"
-            android:textSize="64sp"
+            android:textSize="48sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:text="Time"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_current_topic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:text="Flow State"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="24dp"
+            android:text="Neural stabilization animation"
             android:textColor="@color/text_secondary"
             android:textSize="14sp" />
     </FrameLayout>
@@ -163,7 +174,7 @@
         android:orientation="vertical"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_mode">
+        app:layout_constraintTop_toBottomOf="@id/tv_study_title">
 
         <TextView
             android:id="@+id/tv_ai_question"
@@ -205,7 +216,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <!-- Pause Button -->
+    <!-- Control Buttons -->
     <LinearLayout
         android:id="@+id/layout_timer_controls"
         android:layout_width="match_parent"
@@ -214,6 +225,23 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Session Progress"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp" />
+
+        <ProgressBar
+            android:id="@+id/pb_session_progress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progress="50"
+            android:progressTint="@color/cyan_glow"
+            android:layout_marginBottom="24dp"/>
 
         <Button
             android:id="@+id/btn_play_pause"

@@ -18,13 +18,19 @@ class AppBlockActivity : AppCompatActivity() {
         val pulse = AnimationUtils.loadAnimation(this, R.anim.pulse_aggressive)
         binding.blockGlow.startAnimation(pulse)
 
-        // Set custom message with high-intelligence tone
-        if (com.example.focusguard.engine.CognitiveStateEngine.isStudyModeActive.value) {
-            binding.tvBlockTitle.text = "Cognitive Shield Active"
-            binding.tvBlockMessage.text = "Your mind is in a high-focus protocol. External stimuli have been shielded to protect your cognitive energy."
+        val prefs = getSharedPreferences("FocusGuardPrefs", android.content.Context.MODE_PRIVATE)
+        val quote = prefs.getString("anchor_quote", "I build for my family's better tomorrow.")
+        val photoUri = prefs.getString("anchor_photo", null)
+
+        binding.tvEmotionalQuote.text = "\"$quote\""
+        if (photoUri != null) {
+            try {
+                binding.ivEmotionalAnchor.setImageURI(android.net.Uri.parse(photoUri))
+            } catch (e: Exception) {
+                // Fallback handled via layout default
+            }
         } else {
-            binding.tvBlockTitle.text = "Shield Active"
-            binding.tvBlockMessage.text = com.example.focusguard.engine.CognitiveStateEngine.customBlockMessage.value
+            binding.ivEmotionalAnchor.setBackgroundColor(getColor(R.color.card_dark))
         }
 
         binding.btnBackToFocus.setOnClickListener {
@@ -34,17 +40,10 @@ class AppBlockActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.btnOverride.setOnClickListener {
-            val reason = binding.etOverrideReason.text.toString()
-            if (reason.length > 10) {
-                // If they write a meaningful reason, we allow a temporary unlock
-                // This is a "Reflective communication" unlock (Section 8)
-                android.widget.Toast.makeText(this, "Intention recorded. Shield lowered for 5 minutes.", android.widget.Toast.LENGTH_LONG).show()
-                finish()
-            } else {
-                binding.tvChallengeQuestion.text = "Insufficient neural reflection. Please state a deeper intention."
-                binding.tvChallengeQuestion.setTextColor(getColor(R.color.magenta_alert))
-            }
+        binding.btnContinueAnyway.setOnClickListener {
+            // Apply XP penalty or just unlock
+            android.widget.Toast.makeText(this, "Shield lowered. Focus broken.", android.widget.Toast.LENGTH_LONG).show()
+            finish()
         }
     }
 

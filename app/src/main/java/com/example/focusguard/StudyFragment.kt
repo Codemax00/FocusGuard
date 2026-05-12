@@ -185,6 +185,14 @@ class StudyFragment : Fragment() {
         val minutes = (remainingMillis / 1000) / 60
         val seconds = (remainingMillis / 1000) % 60
         binding.tvTimer.text = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds)
+
+        val totalMillis = selectedDurationMinutes * 60 * 1000L
+        val progress = if (totalMillis > 0) {
+            ((totalMillis - remainingMillis).toFloat() / totalMillis * 100).toInt()
+        } else {
+            0
+        }
+        binding.pbSessionProgress.progress = progress
     }
 
     private fun stopStudyService() {

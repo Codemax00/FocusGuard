@@ -33,6 +33,30 @@ class FocusViewModel(application: Application) : AndroidViewModel(application) {
     private val _dopamineHistory = MutableLiveData<List<Int>>(emptyList())
     val dopamineHistory: LiveData<List<Int>> = _dopamineHistory
 
+    // Emotional Anchor
+    private val prefs = application.getSharedPreferences("FocusGuardPrefs", android.content.Context.MODE_PRIVATE)
+
+    private val _emotionalAnchorQuote = MutableLiveData<String>(prefs.getString("anchor_quote", "I build for my family's better tomorrow.") ?: "")
+    val emotionalAnchorQuote: LiveData<String> = _emotionalAnchorQuote
+
+    private val _emotionalAnchorPhotoUri = MutableLiveData<String?>(prefs.getString("anchor_photo", null))
+    val emotionalAnchorPhotoUri: LiveData<String?> = _emotionalAnchorPhotoUri
+
+    private val _isOnboardingComplete = MutableLiveData<Boolean>(prefs.getBoolean("onboarding_complete", false))
+    val isOnboardingComplete: LiveData<Boolean> = _isOnboardingComplete
+
+    fun saveEmotionalAnchor(quote: String, photoUri: String?) {
+        prefs.edit().apply {
+            putString("anchor_quote", quote)
+            putString("anchor_photo", photoUri)
+            putBoolean("onboarding_complete", true)
+            apply()
+        }
+        _emotionalAnchorQuote.value = quote
+        _emotionalAnchorPhotoUri.value = photoUri
+        _isOnboardingComplete.value = true
+    }
+
     // Study Session State
     private val _isStudyActive = MutableLiveData<Boolean>(false)
     val isStudyActive: LiveData<Boolean> = _isStudyActive
