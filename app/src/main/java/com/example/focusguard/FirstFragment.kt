@@ -75,7 +75,6 @@ class FirstFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 com.example.focusguard.engine.CognitiveStateEngine.currentStatus.collect { state ->
-                    android.util.Log.w("FirstFragment", "Received state change: $state")
                     binding.mainBrainGlow.clearAnimation()
                     binding.mainBrainGlowSecondary.clearAnimation()
                     val pulseAnim: Int

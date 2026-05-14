@@ -104,7 +104,6 @@ class BrainWidgetService : Service() {
         
         CognitiveStateEngine.currentStatus
             .onEach { state ->
-                android.util.Log.w("BrainWidgetService", "Received state change: $state")
                 glowView.clearAnimation()
                 when (state) {
                     BrainState.CALM -> {

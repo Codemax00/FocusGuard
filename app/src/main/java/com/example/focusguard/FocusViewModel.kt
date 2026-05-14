@@ -26,7 +26,10 @@ class FocusViewModel(application: Application) : AndroidViewModel(application) {
     private val _xp = MutableLiveData<Int>(1250)
     val xp: LiveData<Int> = _xp
 
-    // Analytics Data
+    // Analytics Data — ArrayDeque gives O(1) add/removeFirst without copying the whole list
+    private val focusHistoryDeque = ArrayDeque<Int>()
+    private val dopamineHistoryDeque = ArrayDeque<Int>()
+
     private val _focusHistory = MutableLiveData<List<Int>>(emptyList())
     val focusHistory: LiveData<List<Int>> = _focusHistory
 
@@ -131,15 +134,13 @@ class FocusViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 // Update Analytics History
-                val fHistory = _focusHistory.value!!.toMutableList()
-                fHistory.add(_focusLevel.value!!)
-                if (fHistory.size > 20) fHistory.removeAt(0)
-                _focusHistory.postValue(fHistory)
+                focusHistoryDeque.addLast(_focusLevel.value!!)
+                if (focusHistoryDeque.size > 20) focusHistoryDeque.removeFirst()
+                _focusHistory.postValue(focusHistoryDeque.toList())
 
-                val dHistory = _dopamineHistory.value!!.toMutableList()
-                dHistory.add(_dopamineLevel.value!!)
-                if (dHistory.size > 20) dHistory.removeAt(0)
-                _dopamineHistory.postValue(dHistory)
+                dopamineHistoryDeque.addLast(_dopamineLevel.value!!)
+                if (dopamineHistoryDeque.size > 20) dopamineHistoryDeque.removeFirst()
+                _dopamineHistory.postValue(dopamineHistoryDeque.toList())
             }
         }
     }

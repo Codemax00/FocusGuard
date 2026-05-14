@@ -159,7 +159,6 @@ object CognitiveStateEngine {
             else -> BrainState.CALM
         }
         
-        android.util.Log.i("CognitiveEngine", "Updating state: old=${_currentStatus.value}, new=$newState")
         if (newState != _currentStatus.value) {
             _currentStatus.value = newState
         }
