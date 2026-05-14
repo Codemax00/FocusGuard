@@ -16,6 +16,11 @@ class NeuralParticlesView @JvmOverloads constructor(
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val random = Random()
     private var particleColor = context.getColor(R.color.cyan_glow)
+    private var isAnimating = false
+
+    // Squared threshold avoids a sqrt per pair during the broad-phase filter
+    private val connectionDist = 100f
+    private val connectionDistSq = connectionDist * connectionDist
 
     data class Particle(
         var x: Float,
@@ -27,12 +32,12 @@ class NeuralParticlesView @JvmOverloads constructor(
     )
 
     init {
-        // Initialize some particles
+        setLayerType(LAYER_TYPE_HARDWARE, null)
         post {
-            for (i in 0 until 40) {
+            for (i in 0 until 20) { // 20 particles is plenty for the effect
                 particles.add(createParticle())
             }
-            invalidate()
+            startAnimation()
         }
     }
 
@@ -52,41 +57,81 @@ class NeuralParticlesView @JvmOverloads constructor(
         invalidate()
     }
 
+    private fun startAnimation() {
+        if (!isAnimating) {
+            isAnimating = true
+            postInvalidateOnAnimation()
+        }
+    }
+
+    private fun stopAnimation() {
+        isAnimating = false
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        startAnimation()
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        stopAnimation()
+    }
+
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+        if (visibility == VISIBLE) startAnimation() else stopAnimation()
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        
+
         paint.color = particleColor
-        
-        val iterator = particles.iterator()
-        while (iterator.hasNext()) {
-            val p = iterator.next()
-            
+
+        // FILL for dot bodies; stroke settings configured once before connection drawing
+        paint.style = Paint.Style.FILL
+
+        for (i in particles.indices) {
+            val p = particles[i]
+
             // Move particle
             p.x += p.vx
             p.y += p.vy
-            
+
             // Boundary checks
             if (p.x < 0 || p.x > width) p.vx *= -1
             if (p.y < 0 || p.y > height) p.vy *= -1
-            
+
             // Draw particle
             paint.alpha = p.alpha
             canvas.drawCircle(p.x, p.y, p.size, paint)
-            
-            // Draw connections between close particles (Neural link effect)
-            for (other in particles) {
+        }
+
+        // Draw connections — stroke style set once outside the loops
+        paint.style = Paint.Style.STROKE
+        paint.strokeWidth = 1f
+
+        for (i in particles.indices) {
+            val p = particles[i]
+
+            // Only check each pair once (j > i)
+            for (j in i + 1 until particles.size) {
+                val other = particles[j]
                 val dx = p.x - other.x
                 val dy = p.y - other.y
-                val dist = Math.sqrt((dx * dx + dy * dy).toDouble()).toFloat()
-                
-                if (dist < 150f) {
-                    paint.strokeWidth = 1f
-                    paint.alpha = ((1f - dist / 150f) * 50).toInt()
+                val distSq = dx * dx + dy * dy
+
+                if (distSq < connectionDistSq) {
+                    val dist = Math.sqrt(distSq.toDouble()).toFloat()
+                    paint.alpha = ((1f - dist / connectionDist) * 50).toInt()
                     canvas.drawLine(p.x, p.y, other.x, other.y, paint)
                 }
             }
         }
-        
-        invalidate()
+
+        // Schedule next frame in sync with display VSync — only while visible
+        if (isAnimating) {
+            postInvalidateOnAnimation()
+        }
     }
 }

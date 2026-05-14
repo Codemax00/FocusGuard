@@ -143,7 +143,7 @@ class StudySessionService : Service() {
             val serviceChannel = NotificationChannel(
                 CHANNEL_ID,
                 "Study Session Timer",
-                NotificationManager.IMPORTANCE_DEFAULT
+                NotificationManager.IMPORTANCE_LOW
             )
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(serviceChannel)
