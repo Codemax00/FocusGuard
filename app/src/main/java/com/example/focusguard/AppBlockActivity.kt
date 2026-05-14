@@ -3,6 +3,7 @@ package com.example.focusguard
 import android.content.Intent
 import android.os.Bundle
 import android.view.animation.AnimationUtils
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.example.focusguard.databinding.ActivityAppBlockBinding
 
@@ -14,6 +15,14 @@ class AppBlockActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAppBlockBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Prevent going back to the blocked app — route to the home screen instead
+        onBackPressedDispatcher.addCallback(this) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
 
         val pulse = AnimationUtils.loadAnimation(this, R.anim.pulse_aggressive)
         binding.blockGlow.startAnimation(pulse)
@@ -48,11 +57,9 @@ class AppBlockActivity : AppCompatActivity() {
     }
 
     @Deprecated("Deprecated in Java")
+    @Suppress("MissingSuperCall")
     override fun onBackPressed() {
-        // Prevent going back to the blocked app — route to home screen instead
-        val intent = Intent(Intent.ACTION_MAIN)
-        intent.addCategory(Intent.CATEGORY_HOME)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(intent)
+        // Handled by OnBackPressedDispatcher callback registered in onCreate()
+        onBackPressedDispatcher.onBackPressed()
     }
 }
