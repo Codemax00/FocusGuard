@@ -83,7 +83,7 @@ class StudySessionService : Service() {
                 intent.setPackage(packageName)
                 sendBroadcast(intent)
                 
-                stopForeground(true)
+                stopForeground(STOP_FOREGROUND_REMOVE)
                 stopSelf()
             }
         }.start()

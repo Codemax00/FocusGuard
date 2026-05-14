@@ -51,18 +51,16 @@ class CognitiveEyesService : AccessibilityService() {
     }
 
     private fun checkAllActiveWindows() {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-            val windows = windows
-            for (window in windows) {
-                val root = window.root
-                if (root != null) {
-                    checkAndBlock(root.packageName?.toString())
+        val windows = windows
+        for (window in windows) {
+            val root = window.root
+            if (root != null) {
+                checkAndBlock(root.packageName?.toString())
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.TIRAMISU) {
+                    @Suppress("DEPRECATION")
                     root.recycle()
                 }
             }
-        } else {
-            val rootNode = rootInActiveWindow ?: return
-            checkAndBlock(rootNode.packageName?.toString())
         }
     }
 

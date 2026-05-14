@@ -47,9 +47,9 @@ class AppBlockActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        // Prevent going back to the blocked app
-        super.onBackPressed()
+        // Prevent going back to the blocked app — route to home screen instead
         val intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_HOME)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK

@@ -87,6 +87,13 @@ class NeuralParticlesView @JvmOverloads constructor(
             }
         }
         
-        invalidate()
+        if (isAttachedToWindow && visibility == VISIBLE) {
+            invalidate()
+        }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        // Draw loop is naturally stopped because invalidate() is guarded above
     }
 }
